@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="New document 1">
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.1859615"
+     inkscape:cx="235.87239"
+     inkscape:cy="885.29269"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1032"
+     inkscape:window-x="1920"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1" />
+  <defs
+     id="defs4">
+    <pattern
+       inkscape:collect="always"
+       patternUnits="userSpaceOnUse"
+       width="30.066020"
+       height="5.1805778"
+       id="Wavy"
+       inkscape:stockid="Wavy">
+      <path
+         style="fill:black;stroke:none;"
+         d="M 7.597,0.061 C 5.079,-0.187 2.656,0.302 -0.01,1.788 L -0.01,3.061 C 2.773,1.431 5.173,1.052 7.472,1.280 C 9.770,1.508 11.969,2.361 14.253,3.218 C 18.820,4.931 23.804,6.676 30.066,3.061 L 30.062,1.788 C 23.622,5.497 19.246,3.770 14.691,2.061 C 12.413,1.207 10.115,0.311 7.597,0.061 z "
+         id="path7205" />
+    </pattern>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient7292">
+      <stop
+         id="stop7294"
+         offset="0"
+         style="stop-color:#000000;stop-opacity:1;" />
+    </linearGradient>
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g3033"
+       gcodetools="Gcodetools orientation group"
+       transform="translate(0,-1051.4675)">
+      <g
+         id="g3035"
+         gcodetools="Gcodetools orientation point (2 points)">
+        <path
+           id="path3037"
+           style="fill:#000000;stroke:none"
+           gcodetools="Gcodetools orientation point arrow"
+           d="m 0,1052.3622 2.9375,-6.3437 0.8125,1.9062 6.843749,-6.8437 0,0 0.6875,0.6875 -6.8437504,6.8437 1.90625,0.8125 z"
+           inkscape:connector-curvature="0" />
+        <text
+           id="text3039"
+           xml:space="preserve"
+           y="1042.3622"
+           x="10"
+           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans"
+           gcodetools="Gcodetools orientation point text"><tspan
+             id="tspan3041"
+             sodipodi:role="line"
+             y="1042.3622"
+             x="10">(0.0; 0.0; 0.0)</tspan></text>
+      </g>
+      <g
+         id="g3043"
+         gcodetools="Gcodetools orientation point (2 points)">
+        <path
+           id="path3045"
+           style="fill:#000000;stroke:none"
+           gcodetools="Gcodetools orientation point arrow"
+           d="m 354.33071,1052.3622 2.9375,-6.3437 0.8125,1.9062 6.84375,-6.8437 0,0 0.6875,0.6875 -6.84375,6.8437 1.90625,0.8125 z"
+           inkscape:connector-curvature="0" />
+        <text
+           id="text3047"
+           xml:space="preserve"
+           y="1042.3622"
+           x="364.33072"
+           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans"
+           gcodetools="Gcodetools orientation point text"><tspan
+             id="tspan3049"
+             sodipodi:role="line"
+             y="1042.3622"
+             x="364.33072">(100.0; 0.0; -0.125)</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g3265" />
+    <g
+       id="g4292" />
+    <g
+       id="g7639" />
+  </g>
+  <defs
+     id="defs3695">
+    <marker
+       style="overflow:visible"
+       refY="-1.687441"
+       refX="-4"
+       orient="auto"
+       id="CheckToolsAndOPMarker">
+      <path
+         id="path3698"
+         style="fill:#000044; fill-rule:evenodd;stroke:none;"
+         d=" m -4.588864,-1.687441 0.0,0.0 L -9.177728,0.0 c 0.73311,-0.996261 0.728882,-2.359329 0.0,-3.374882" />
+    </marker>
+  </defs>
+  <defs
+     id="defs3700">
+    <marker
+       style="overflow:visible"
+       refY="-1.687441"
+       refX="-4"
+       orient="auto"
+       id="DrawCurveMarker">
+      <path
+         id="path3703"
+         style="fill:#000044; fill-rule:evenodd;stroke:none;"
+         d="m -4.588864,-1.687441 0.0,0.0 L -9.177728,0.0 c 0.73311,-0.996261 0.728882,-2.359329 0.0,-3.374882" />
+    </marker>
+  </defs>
+  <defs
+     id="defs3705">
+    <marker
+       style="overflow:visible"
+       refY="-1.687441"
+       refX="4"
+       orient="auto"
+       id="DrawCurveMarker_r">
+      <path
+         id="path3708"
+         style="fill:#000044; fill-rule:evenodd;stroke:none;"
+         d="m 4.588864,-1.687441 0.0,0.0 L 9.177728,0.0 c -0.73311,-0.996261 -0.728882,-2.359329 0.0,-3.374882" />
+    </marker>
+  </defs>
+  <defs
+     id="defs3710">
+    <marker
+       style="overflow:visible"
+       refY="-1.687441"
+       refX="-4"
+       orient="auto"
+       id="InOutPathMarker">
+      <path
+         id="path3713"
+         style="fill:#0072a7; fill-rule:evenodd;stroke:none;"
+         d="m -4.588864,-1.687441 0.0,0.0 L -9.177728,0.0 c 0.73311,-0.996261 0.728882,-2.359329 0.0,-3.374882" />
+    </marker>
+  </defs>
+</svg>
