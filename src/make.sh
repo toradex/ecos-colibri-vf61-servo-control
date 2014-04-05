@@ -7,7 +7,7 @@ export PATH="{path/to/toolchain}/bin:$PATH"   # modify this
 OPT="-Wall -Wpointer-arith -Wstrict-prototypes -Wundef -Wno-write-strings -mthumb -g -O2 -ffunction-sections -fdata-sections -fno-exceptions -nostdlib -mcpu=cortex-m4"
 
 # Set path to eCos kernel
-KPATH="build"
+KPATH="ecos-kernel"
 
 # Do compilation and link your application with kernel.
 arm-eabi-gcc -g -I./ -g -I${KPATH}/install/include plotter.c \
