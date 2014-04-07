@@ -90,11 +90,12 @@ Then eCos software starts reading the memory and executing the g-code commands o
 .. warning:: 
    
    Currently only a basic set of g-codes is implemented. The plotter is able to execute the following gcodes:
-   G00 - Rapid linear move; 
-   G01 - Feed linear move; 
-   G02 - Circular move CW (Arcs only);
-   G03 - Circular move CCW (Arcs only);
-   G04 - Delay;
+   
+   * G00 - Rapid linear move
+   * G01 - Feed linear move
+   * G02 - Circular move CW (Arcs only)
+   * G03 - Circular move CCW (Arcs only)
+   * G04 - Delay
 
 Creating the binary file
 ~~~~~~~~~~~~~~~~~~~~~~~~
