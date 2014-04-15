@@ -2,6 +2,8 @@
 
 .. role:: program
 
+.. role:: guilabel
+
 PenPlotter eCos demo
 ======================
 
