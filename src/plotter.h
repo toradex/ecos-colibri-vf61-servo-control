@@ -1,7 +1,7 @@
 /*
  * plotter.h
  *
- *  Created on: 14 gru 2013
+ *  Created on: 2013-12-14
  *      Author: Antmicro Ltd
  */
 
