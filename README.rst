@@ -157,4 +157,77 @@ This will shrink the DDR memory available for Linux into 240MB leaving a 16MB bu
    3, 0x8F000400, 0x8F9FFFF3, ~10MB for Cortex-M4 eCos purposes
    4, 0x8F9FFFF4, 0x8F9FFFF7, 4 bytes. Change to ``0xDEADBEEF`` when plotter aplication is started
    5, 0x8F9FFFF8, 0x8F9FFFFB, 4 bytes. Instruction code from Linux
-   6, 0x8F9FFFFC
+   6, 0x8F9FFFFC, 0x8FFFFFFF, ~6MB for the generated image.bin file
+
+Running the plotter application and assigning the drawing task
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+While eCos on Vybrid can also be run directly from U-Boot, this eCos application is intended to be be launched from Linux user space as it needs to be supplied with image data to be drawn.
+The recommended way is to use the :program:`mqxboot` utility.
+This program simply loads the eCos binary into RAM memory, sets the entry point and starts the Cortex-M4 core.
+The utility comes from the Freescale MQX operating system but it may be used as a stand-alone loader for virtually any software dedicated for Vybrid's Cortex-M4 core. 
+
+Use the following command to start loading eCos from user-space. 
+
+.. code-block:: bash 
+   
+   mqxboot plotter.bin 0x8f000400 0x0f000411
+   
+This should cause the ``plotter.bin`` application to run and an appropriate welcome message should be printed to predefined diagnostic (UART) port.
+The application is now working in the background silently and waiting for a drawing assignment. 
+We may use the same loading utility (:program:`mqxboot`) to load the image data into memory.
+In that case the entry point is not important, as the application is already running. 
+
+.. code-block:: bash 
+   
+   mqxboot image.bin 0x8FA00000 0x0
+   
+The final step requires issuing a ``Start`` command to the eCos application.
+The procedure of issuing commands to the eCos plotter application is described below.
+   
+Inter-core communication protocol
+---------------------------------
+
+This eCos application running on the Cortex-M4 core exchanges data with an application running on the Cortex-A5 core over shared memory and can be driven using a simple set of commands.
+The command code uniquely defines the state of plotting device.
+A list of currently supported orders is provided below:
+
+.. csv-table::
+   :header: Comand/Status code,Interpretation as Command, Interpretation as Status
+   
+   0, Stop, Stopped
+   1, Continue (when paused), Running
+   2, Start drawing from memory, Start drawing command received
+   10, Pause, Paused
+   11, "Calibrate - Find home (0,0)", Calibrating
+
+For the shared memory communication, three 32bit registers are used. 
+
+.. csv-table::
+   :header: Position,Address,Description
+   
+   1, 0x8F9FFFF4, "eCos sets this register to ``0xDEADBEEF`` soon after start"
+   2, 0x8F9FFFF8, "Command code. Described below"
+   3, 0x8F9FFFFC, "First (least significant) two bytes: Progress (0-100); Last (more significant) two bytes: Status (same as command)"
+   
+Shared memory is the simplest way of inter-core communication.
+Cortex-M4 has free access to the entire memory map (including DDR where Linux will be loaded), so the user space application has to write to given address to transfer data.
+In the current implementation the order code is placed at ``0x8F9FFFF8``.
+The ``IOreg`` utility can be used on the Linux side, which should be available in your Colibri VF61 Linux distribution.
+The following example sends a single order from the Cortex-A Linux user space to eCos running on the Cortex-M core. 
+
+.. code-block:: bash 
+   
+   devmem2 0x8F9FFFF8 w 2
+
+The first parameter is the address to be accessed.
+The second one is the type of register, namely ``b`` for byte, ``h`` for half word, ``w`` for word.
+Finally the last argument is the value to be written.
+If the last parameter is omitted then ``devmem2`` performs a single read operation.
+We can use the same method to determine the state of eCos application. 
+
+.. code-block:: bash
+
+   devmem2 0x8F9FFFFC w
+
+The first example should cause the application to start drawing whereas the latter should return the current drawing status.  
