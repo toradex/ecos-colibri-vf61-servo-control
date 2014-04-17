@@ -30,7 +30,7 @@ The compilation can be done using the following steps:
 
 .. code-block:: bash
 
-   git clone https://github.com/mgielda/ecos-colibri-vf61-xypenplotter
+   git clone https://github.com/antmicro/ecos-colibri-vf61-xypenplotter
    cd ecos-colibri-vf61-xypenplotter/src
    vi make.sh
    [use your favourite editor and set toolchain path]
