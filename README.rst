@@ -38,7 +38,7 @@ The compilation can be done using the following steps:
 
 This repository already contains a pre-compiled eCos kernel suitable for use with the plotter application.
 
-If a custom eCos kernel is to be used instead, it can be compiled separately and pointed to by the ``KPATH`` variable.
+If a custom eCos kernel is to be used instead, it can be compiled separately and pointed to by the ``BTPATH`` variable.
 
 Preparing images for drawing
 ----------------------------
