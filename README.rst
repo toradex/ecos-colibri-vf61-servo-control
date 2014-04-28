@@ -82,10 +82,10 @@ Your Inkscape window should look similar to the figure below.
 
 .. image:: antmicro-symbol.png
 
-Now select all the elements of your image and group them (:menuselection:`Object --> Group`).
+Now select all the elements of your image (excluding coordinate systems) and group them (:menuselection:`Object --> Group`).
 Next, convert the object to path with :menuselection:`Path --> Object to path`.
 Lastly, choose :menuselection:`Extensions --> Gcodetools --> Path to gcode`.
-Switch to the :guilabel:`Preferences` tab and edit the :guilabel:`Directory` to decide where to save your g-codes. 
+Switch to the :guilabel:`Preferences` tab and edit the :guilabel:`Directory` to decide where to save your g-codes (directory must exist).
 Next select the :menuselection:`Path to Gcode` tab and click :menuselection:`Apply`.
 
 Before you use the g-code file generated this way to drive the plotter, you have to convert them to a binary file suitable for placing in memory, so that eCos will be able to read it.
@@ -111,9 +111,9 @@ It is executed as follows:
 
 .. code-block:: bash 
 
-   ./python g2b.py <image_filename>
+   ./python g2b.py <ngc_filename>
    
-The script creates an ``image.bin`` output binary file.
+The script creates an ``image.bin`` output binary file from *.ngc file created by Inkscape.
 This file includes values from your g-code file.
 
 Every instruction is divided into 7 fields:
@@ -157,7 +157,8 @@ This will shrink the DDR memory available for Linux into 240MB leaving a 16MB bu
    3, 0x8F000400, 0x8F9FFFF3, ~10MB for Cortex-M4 eCos purposes
    4, 0x8F9FFFF4, 0x8F9FFFF7, 4 bytes. Change to ``0xDEADBEEF`` when plotter aplication is started
    5, 0x8F9FFFF8, 0x8F9FFFFB, 4 bytes. Instruction code from Linux
-   6, 0x8F9FFFFC, 0x8FFFFFFF, ~6MB for the generated image.bin file
+   6, 0x8F9FFFFC, 0x8F9FFFFF, 4 bytes. Progress and current state to Linux
+   7, 0x8FA00000, 0x8FFFFFFF, ~6MB for the generated image.bin file
 
 Running the plotter application and assigning the drawing task
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -213,7 +214,7 @@ For the shared memory communication, three 32bit registers are used.
 Shared memory is the simplest way of inter-core communication.
 Cortex-M4 has free access to the entire memory map (including DDR where Linux will be loaded), so the user space application has to write to given address to transfer data.
 In the current implementation the order code is placed at ``0x8F9FFFF8``.
-The ``IOreg`` utility can be used on the Linux side, which should be available in your Colibri VF61 Linux distribution.
+The ``devmem2`` utility can be used on the Linux side, which should be available in your Colibri VF61 Linux distribution.
 The following example sends a single order from the Cortex-A Linux user space to eCos running on the Cortex-M core. 
 
 .. code-block:: bash 

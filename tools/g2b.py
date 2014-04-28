@@ -55,10 +55,10 @@ for line in gf:
         tab.append(j)
         tab.append(par)
             
-    bfile.write(struct.pack('l',len(tab)));     
-    for row in tab:
-        for column in row:
-           bfile.write(column);
+bfile.write(struct.pack('I',len(tab)))
+for row in tab:
+    for column in row:
+       bfile.write(column)
                   
 bfile.close()
 gf.close()
