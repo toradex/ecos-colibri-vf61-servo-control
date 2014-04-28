@@ -28,9 +28,10 @@
 //Timers
 #define FTM1 CYGHWR_HAL_VYBRID_FTM1_P
 
+//Additional definitions
 #define FACTOR 8.823529412*2
 
-// threads
+//Threads
 static unsigned char stack_thread1[CYGNUM_HAL_STACK_SIZE_MINIMUM];
 static unsigned char stack_thread2[CYGNUM_HAL_STACK_SIZE_MINIMUM];
 static unsigned char stack_thread3[CYGNUM_HAL_STACK_SIZE_MINIMUM];
@@ -73,10 +74,11 @@ int main(int argc, char **argv)
 	cyg_thread_create(10, (cyg_thread_entry_t*) thread_fn_2, 0, "thread2", &stack_thread2[0], CYGNUM_HAL_STACK_SIZE_MINIMUM, &thread_2, &thread_data_2);
 	cyg_thread_create(10, (cyg_thread_entry_t*) thread_fn_3, 0, "thread3", &stack_thread3[0], CYGNUM_HAL_STACK_SIZE_MINIMUM, &thread_3, &thread_data_3);
 
-	diag_printf("-----------------\n");
+	diag_printf("--------------------------\n");
 	diag_printf(" eCos Plotter Application \n");
-	diag_printf("-----------------\n");
+	diag_printf("--------------------------\n");
 
+	//Initialize GPIO
 	 hal_set_pin_function(PUL_X);
 	 hal_set_pin_function(DIR_X);
 	 hal_set_pin_function(PUL_Y);
@@ -85,7 +87,7 @@ int main(int argc, char **argv)
 	 hal_set_pin_function(LIM_X);
 	 hal_set_pin_function(LIM_Y);
 
-	// Initialize FlexTimer for PWM generation
+	//Initialize FlexTimer for PWM generation
 	FTM1->sc = 0xf; 		//SC: last 5 bits: 00(CLK source)001(Prescaler)
 	FTM1->mod = 0x00fe;		//MOD register -> MOD+1 determine the period of PWM signal
 	FTM1->c[1].sc = 0x28; 	//C1SC Status and Control, MSB set-> EPWM enabled, ELSB->clear out on match
