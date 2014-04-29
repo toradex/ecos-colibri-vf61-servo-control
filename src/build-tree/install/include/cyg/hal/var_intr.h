@@ -228,8 +228,6 @@ typedef enum {
 #define CYGNUM_FREESCALE_ENET0_ERROR_INT_VECTOR      \
             CYGNUM_HAL_INTERRUPT_ENET_ERROR
 
-#define HAL_VAR_INTERRUPT_MASK( __vector ) CYG_EMPTY_STATEMENT
-#define HAL_VAR_INTERRUPT_UNMASK( __vector ) CYG_EMPTY_STATEMENT
 #define HAL_VAR_INTERRUPT_CONFIGURE( __vector, __level, __up )  CYG_EMPTY_STATEMENT
 #define HAL_VAR_INTERRUPT_ACKNOWLEDGE( __vector ) CYG_EMPTY_STATEMENT
 
@@ -244,6 +242,17 @@ typedef enum {
 	}																	\
 }
 
+#define HAL_VAR_INTERRUPT_MASK( __vector ) 				\
+{																		\
+	HAL_WRITE_UINT32( CYGARC_REG_NVIC_BASE+CYGARC_REG_NVIC_CPR(__vector-CYGNUM_HAL_INTERRUPT_EXTERNAL),	\
+	                          CYGARC_REG_NVIC_IBIT(__vector-CYGNUM_HAL_INTERRUPT_EXTERNAL) );				\
+}
+
+#define HAL_VAR_INTERRUPT_UNMASK( __vector ) 				\
+{																		\
+	HAL_WRITE_UINT32( CYGARC_REG_NVIC_BASE+CYGARC_REG_NVIC_CPR(__vector-CYGNUM_HAL_INTERRUPT_EXTERNAL),	\
+	                          CYGARC_REG_NVIC_IBIT(__vector-CYGNUM_HAL_INTERRUPT_EXTERNAL) );				\
+}
 //----------------------------------------------------------------------------
 #endif // CYGONCE_HAL_VAR_INTR_H
 // EOF var_intr.h

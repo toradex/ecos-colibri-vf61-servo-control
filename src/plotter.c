@@ -10,6 +10,12 @@
 #include <math.h>
 #include "plotter.h"
 
+#define USING_MCC
+
+#ifdef USING_MCC
+#include <cyg/mcc/mcc_api.h>
+#endif
+
 #define CYGHWR_HAL_VYBRID_PORT_ALT_GPIO 0
 #define CYGHWR_HAL_VYBRID_PORT_INPUT 0x21
 #define CYGHWR_HAL_VYBRID_PORT_OUTPUT 0x22
@@ -24,6 +30,17 @@
 #define EM CYGHWR_HAL_VYBRID_PIN(D, 40, CYGHWR_HAL_VYBRID_PORT_ALT_GPIO, CYGHWR_HAL_VYBRID_PORT_OUTPUT)
 #define LIM_X CYGHWR_HAL_VYBRID_PIN(D, 9, CYGHWR_HAL_VYBRID_PORT_ALT_GPIO, CYGHWR_HAL_VYBRID_PORT_INPUT)
 #define LIM_Y CYGHWR_HAL_VYBRID_PIN(C, 1, CYGHWR_HAL_VYBRID_PORT_ALT_GPIO, CYGHWR_HAL_VYBRID_PORT_INPUT)
+
+#ifdef USING_MCC
+typedef struct the_message
+{
+   cyg_uint32  DATA;
+   cyg_uint32 STATUS;
+} THE_MESSAGE;
+
+unsigned int endpoint_a5[] = {0,MCC_NODE_A5,MCC_SENDER_PORT};
+unsigned int endpoint_m4[] = {1,MCC_NODE_M4,MCC_RESPONDER_PORT};
+#endif
 
 //Timers
 #define FTM1 CYGHWR_HAL_VYBRID_FTM1_P
@@ -144,7 +161,7 @@ int main(int argc, char **argv)
 									trans_y = (image_to_draw[i+2])*FACTOR;
 								}
 								else trans_y = _y;
-								diag_printf(">>PLOT LINE %d %d\n", (int)trans_x, (int)trans_y);
+								//diag_printf(">>PLOT LINE %d %d\n", (int)trans_x, (int)trans_y);
 								cyg_thread_delay(30);
 								plotter_goto((int)trans_x, (int)trans_y);
 								cyg_thread_delay(30);
@@ -158,7 +175,7 @@ int main(int argc, char **argv)
 								trans_y = (image_to_draw[i+2])*FACTOR;
 								trans_i = (image_to_draw[i+4])*FACTOR;
 								trans_j = (image_to_draw[i+5])*FACTOR;
-								diag_printf(">>PLOT CW %d %d    %d %d\n", (int)trans_x, (int)trans_y,(int)trans_i, (int)trans_j );
+								//diag_printf(">>PLOT CW %d %d    %d %d\n", (int)trans_x, (int)trans_y,(int)trans_i, (int)trans_j );
 								plotter_arc_cw(trans_x, trans_y, trans_i, trans_j);
 							}
 
@@ -169,7 +186,7 @@ int main(int argc, char **argv)
 								trans_y = (image_to_draw[i+2])*FACTOR;
 								trans_i = (image_to_draw[i+4])*FACTOR;
 								trans_j = (image_to_draw[i+5])*FACTOR;
-								diag_printf(">>PLOT CCW %d %d    %d %d\n", (int)trans_x, (int)trans_y,(int)trans_i, (int)trans_j );
+								//diag_printf(">>PLOT CCW %d %d    %d %d\n", (int)trans_x, (int)trans_y,(int)trans_i, (int)trans_j );
 								plotter_arc_ccw(trans_x, trans_y, trans_i, trans_j);
 							}
 
@@ -180,15 +197,14 @@ int main(int argc, char **argv)
 							}
 						}
 
-						if(i>= im_size-7) {plotter_status =  PLOTTER_STOP; break;}
-						else if(plotter_status == PLOTTER_START) {i+=7;if(progress != 100)progress=(int)(i*100)/im_size;}
+						if((i+7)>= im_size-7 && progress != 100) {progress = 100;}
+						else if(plotter_status == PLOTTER_START) {i+=7;if(progress != 100)progress=(int)ceil((i*100)/im_size);}
 						else if(plotter_status == PLOTTER_PAUSE) {cyg_thread_delay(10);}
 						else if(plotter_status == PLOTTER_UNPAUSE) {plotter_status = PLOTTER_START;i+=7;}
 						else if(plotter_status == PLOTTER_HOME || plotter_status == PLOTTER_STOP) {break;}
-
 					}
+					if(i >= im_size) plotter_status = PLOTTER_STOP;
 			    }
-			    progress = 0;
 				break;
 			case PLOTTER_HOME:
 				progress = 0;
@@ -313,6 +329,48 @@ void thread_fn_2(void)
 	}
 }
 
+#ifdef USING_MCC
+
+/**
+ * MCC Thread
+ */
+void thread_fn_3(void)
+{
+
+	THE_MESSAGE     msg, smsg;
+	unsigned int    num_of_received_bytes;
+	int             ret_value;
+
+	msg.DATA = 1;
+	ret_value = mcc_initialize(MCC_NODE_M4);
+
+	if(0 != ret_value) {diag_printf("Error! App stopped\n"); while(1);}
+
+	ret_value = mcc_create_endpoint(endpoint_m4, MCC_RESPONDER_PORT);
+
+	while(1)
+	{
+		//diag_printf("MCC_START \n");
+		ret_value = mcc_recv_copy(endpoint_m4, &msg, sizeof(THE_MESSAGE), &num_of_received_bytes, 500000);
+		if(0 != ret_value) {
+			//diag_printf("Responder task receive error: 0x%02x\n", ret_value);
+		} else {
+			if(msg.DATA <= PLOTTER_WELCOME) plotter_status = msg.DATA;
+			//diag_printf("Responder OK... %d %d\n", msg.DATA, msg.STATUS);
+			//cyg_thread_delay(1);
+			smsg.DATA=progress;
+			smsg.STATUS = plotter_status;
+			ret_value = mcc_send(endpoint_a5, &smsg, sizeof(THE_MESSAGE), 5000000);
+		}
+		//diag_printf("MCC_END \n");
+		//diag_printf("Plotter status: %d Progress: %d\n", plotter_status, progress);
+		cyg_thread_delay(50);
+	}
+
+}
+//----------------------------------------------Functions
+#else
+
 /**
  * Communication thread
  */
@@ -336,6 +394,7 @@ void thread_fn_3(void)
 	}
 
 }
+#endif
 
 /**
  * Set PWM for electromagnet  1: 0%; 0: 50%
@@ -355,40 +414,35 @@ FTM1->c[1].v = duty;
  */
 void plotter_goto(int X, int Y)
 {
-	double stepX_devider=0;
-	double stepY_devider=0;
 	int diffX = X - _x;
 	int diffY = Y - _y;
 
-	//Calculations
-	if(diffX == 0 || diffY == 0)
+	if(diffX != 0 && diffY != 0)
 	{
-		stepX_devider = stepY_devider = 1.0;
+		if(abs(diffX)>=abs(diffY))
+		{
+			_delayX = 1;
+			_delayY = 1*((double)abs(diffX)/(double)abs(diffY));
+		}
+		else
+		{
+			_delayY = 1;
+			_delayX = 1*((double)abs(diffY)/(double)abs(diffX));
+		}
 	}
-	else
+	else if(diffX == 0 || diffY == 0)
 	{
-		int gcd = GCD(abs(diffX), abs(diffY));
-		if(gcd <= 0) return;
-		stepX_devider = abs(diffY)/gcd;
-		stepY_devider = abs(diffX)/gcd;
+		_delayY = _delayX = 1.0;
 	}
 
-	if(abs(diffX)>=abs(diffY))
-	{
-		_delayX = 1;
-		_delayY = 1*((double)stepY_devider/(double)stepX_devider);
-	}
-	else
-	{
-		_delayY = 1;
-		_delayX = 1*((double)stepX_devider/(double)stepY_devider);
-	}
+	if(_delayX<1) _delayX = 1.0;
+	if(_delayY<1) _delayY = 1.0;
+
 
 	_zadX = X;
 	_zadY = Y;
 
-	do
-	{
+	do{
 		cyg_thread_delay(1);
 	}while(((_x != X) || (_y != Y)) && plotter_status != PLOTTER_STOP );
 }
@@ -470,6 +524,8 @@ void plotter_arc_ccw(double x_end, double y_end, double ii, double jj)
  */
 void plotter_go_home(void)
 {
+	diag_printf("Homing started! \n");
+	//Checking
 	//XY Calibration
 	_zadX = -5000;
 	_zadY = -5000;
@@ -501,19 +557,7 @@ void plotter_go_home(void)
 		cyg_thread_delay(1);
 	}
 	_x =_zadX = _y = _zadY = 0;
-}
-
-/**
- * Greatest common divisor
- */
-int GCD(int a, int b)
-{
-    while(a!=b)
-       if(a>b)
-           a-=b;
-       else
-           b-=a;
-    return a;
+	diag_printf("Homing finished! \n");
 }
 
 /**

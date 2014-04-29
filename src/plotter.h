@@ -22,10 +22,10 @@
 #ifndef TEST_APP_MIN_H_
 #define TEST_APP_MIN_H_
 
-#define MCC_MQX_NODE_A5        (0)
-#define MCC_MQX_NODE_M4        (0)
-#define MCC_MQX_SENDER_PORT    (1)
-#define MCC_MQX_RESPONDER_PORT (2)
+#define MCC_NODE_A5        (0)
+#define MCC_NODE_M4        (0)
+#define MCC_SENDER_PORT    (1)
+#define MCC_RESPONDER_PORT (2)
 
 #define PLOTTER_STOP     (0)
 #define PLOTTER_START    (1)

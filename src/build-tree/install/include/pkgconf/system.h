@@ -41,14 +41,6 @@
 /***** serial driver proc output start *****/
 #define CYGDAT_IO_SERIAL_DEVICE_HDR_HEADER <pkgconf/io_serial_freescale_uart_hdr.h>
 /*****  serial driver proc output end  *****/
-#define CYGPKG_IO_SERIAL_FREESCALE_UART current
-#define CYGPKG_IO_SERIAL_FREESCALE_UART_current
-#define CYGNUM_IO_SERIAL_FREESCALE_UART_VERSION_MAJOR CYGNUM_VERSION_CURRENT
-#define CYGNUM_IO_SERIAL_FREESCALE_UART_VERSION_MINOR -1
-#define CYGNUM_IO_SERIAL_FREESCALE_UART_VERSION_RELEASE -1
-/***** serial driver proc output start *****/
-#define CYGDAT_IO_SERIAL_DEVICE_HEADER <pkgconf/io_serial_freescale_uart.h>
-/*****  serial driver proc output end  *****/
 #define CYGPKG_HAL current
 #define CYGPKG_HAL_current
 #define CYGNUM_HAL_VERSION_MAJOR CYGNUM_VERSION_CURRENT
@@ -144,5 +136,10 @@
 #define CYGNUM_ERROR_VERSION_MAJOR CYGNUM_VERSION_CURRENT
 #define CYGNUM_ERROR_VERSION_MINOR -1
 #define CYGNUM_ERROR_VERSION_RELEASE -1
+#define CYGPKG_MCC current
+#define CYGPKG_MCC_current
+#define CYGNUM_MCC_VERSION_MAJOR CYGNUM_VERSION_CURRENT
+#define CYGNUM_MCC_VERSION_MINOR -1
+#define CYGNUM_MCC_VERSION_RELEASE -1
 
 #endif
