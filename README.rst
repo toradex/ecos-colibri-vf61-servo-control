@@ -70,11 +70,17 @@ To generate such a file from scratch, it is good to refer to the documentation p
 Failing to do so may cause the plotting head to drive beyond the physical drawing area which may lead to damage in the plotter's mechanical assembly. 
 
 Launch Inkscape and open the reference image named ``gcode.svg`` from the ``tools`` folder. 
-This file has a starting point for the coordinate systems assigned; it is in the top left corner of the drawing area. Although the used coordinate system seems to be wrong, it is correct. Other coordinate systems cause the generate a g-codes which are incorrectly interpreted by the plotter application. As a result the image may be drawn in the wrong place or the pen will not be lowered for drawing.
+This file has a starting point for the coordinate systems assigned; it is in the top left corner of the drawing area.
 
 This will be called the ``home`` position for plotter.
 
 By default the plotter starts and ends drawing in the ``home`` position.
+
+.. note::
+
+   Although the coordinate system used might seem strange, it is correct.
+   Other coordinate systems generate g-codes which are incorrectly interpreted by the plotter application.
+   As a result the image may be drawn in the wrong place or the pen will not be lowered for drawing.
 
 It is now time to release your creativity - draw something.
 Your Inkscape window should look similar to the figure below. 
