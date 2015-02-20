@@ -8,11 +8,14 @@ embedded-world-2015) and uses Multi-Core Communication (MCC) to start the
 servo motors synchronized.
 
 The firmware can also be loaded manually using
-$ mqxboot /home/root/servo.bin 0x8f000400 0x0f000411
+
+    $ mqxboot /home/root/servo.bin 0x8f000400 0x0f000411
 
 In order to make loading of the eCos firmware possible the Linux memory
 resources need to be restricted using U-Boot arguments:
-Colibri VFxx # set memargs mem=240M
+
+    Colibri VFxx # set memargs mem=240M
 
 Also make sure the device tree is still loaded in a reachable memory area:
-Colibri VFxx # set fdt_high 0x88000000
+
+    Colibri VFxx # set fdt_high 0x88000000
